@@ -1,5 +1,5 @@
 // 1. Add console.log to check to see if our code is working.
-console.log("working");
+    console.log("working");
 
 // 2. Create the map object with a center and zoom level.
     // We're assigning the variable map to the object L.map(), and we'll instantiate the object with the given string 'mapid'.
@@ -7,14 +7,21 @@ console.log("working");
     // The setView() method sets the view of the map with a geographical center,
     // where the first coordinate is latitude (40.7) and the second is longitude (-94.5). We set the zoom level of "4" on a scale 0–18.
 
-    // create the map object with a center and zoom level
-    let map = L.map('mapid').setView([34.0522, -118.2437], 4);
+    // Create the map object with center at the San Francisco airport.
+    let map = L.map('mapid').setView([37.6213, -122.3790], 4);
 
-    // add a marker to the map for LA, CA
-    L.circle([34.0522, -118.2437], {
-        radius: 300,
-        color: 'black',
-        fillColor: '#ffffa1'
+    // Coordinates for each point to be used in the polyline.
+    let line = [
+        [33.9416, -118.4085],
+        [30.1975, -97.6664],
+        [43.6777, -79.6248],
+        [40.6413, -73.7781]
+    ];
+
+    // Create a polyline using the line coordinates and make the line red.
+    L.polyline(line, {
+        color: "yellow",
+        lineweight: 4,
     }).addTo(map);
 
 
@@ -28,26 +35,26 @@ console.log("working");
     // We add the accessToken attribute and assign it the value of our API_KEY.
     // Finally, we call the addTo() function with our map object, map on our graymap object tile layer. The addTo() function will add the graymap object tile layer to our let map.
 
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    accessToken: API_KEY
-});
+    let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        accessToken: API_KEY
+    });
 
 // Then we add our 'graymap' tile layer to the map.
-streets.addTo(map);
+    streets.addTo(map);
 
 // Get data from cities.js
-let cityData = cities;
+    let cityData = cities;
 
 // Loop through the cities array and create one marker for each city.
-cityData.forEach(function(city) {
-    console.log(city)
-    L.circleMarker(city.location, {
-        radius: city.population/200000,
-        lineweight: 4,
-        color: 'red'
-    })
-    .bindPopup("<h2>" + city.city + ", " + city.state + "</h2> <hr> <h3>Population " + city.population.toLocaleString() + "</h3>")
-  .addTo(map);
-});
+    // cityData.forEach(function(city) {
+    //     console.log(city)
+    //     L.circleMarker(city.location, {
+    //         radius: city.population/200000,
+    //         lineweight: 4,
+    //         color: 'red'
+    //     })
+    //     .bindPopup("<h2>" + city.city + ", " + city.state + "</h2> <hr> <h3>Population " + city.population.toLocaleString() + "</h3>")
+    // .addTo(map);
+    // });
