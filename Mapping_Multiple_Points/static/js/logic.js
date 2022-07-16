@@ -8,7 +8,7 @@ console.log("working");
     // where the first coordinate is latitude (40.7) and the second is longitude (-94.5). We set the zoom level of "4" on a scale 0–18.
 
     // create the map object with a center and zoom level
-    let map = L.map('mapid').setView([34.0522, -118.2437], 14);
+    let map = L.map('mapid').setView([34.0522, -118.2437], 4);
 
     // add a marker to the map for LA, CA
     L.circle([34.0522, -118.2437], {
@@ -37,5 +37,17 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
 
-//  Add a marker to the map for Los Angeles, California.
-let marker = L.marker([34.0522, -118.2437]).addTo(map);
+// Get data from cities.js
+let cityData = cities;
+
+// Loop through the cities array and create one marker for each city.
+cityData.forEach(function(city) {
+    console.log(city)
+    L.circleMarker(city.location, {
+        radius: city.population/200000,
+        lineweight: 4,
+        color: 'red'
+    })
+    .bindPopup("<h2>" + city.city + ", " + city.state + "</h2> <hr> <h3>Population " + city.population.toLocaleString() + "</h3>")
+  .addTo(map);
+});
